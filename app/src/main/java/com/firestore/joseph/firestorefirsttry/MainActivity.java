@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,7 +85,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        TODO: Merge
+//        TODO: Using merge so that exsisting data will not be over written
+        Map<String, Object> data = new HashMap<>();
+        data.put("ph","007");
+
+        data.put("capital", true);db.collection("students").document("newStudent").set(data, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("Merge","Success");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Merge","Error");
+            }
+        });
 
     }
 }
