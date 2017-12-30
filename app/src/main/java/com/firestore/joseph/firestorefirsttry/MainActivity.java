@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -104,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        TODO: Different data types supported in firestore
-
         Map<String, Object> docData = new HashMap<>();
         docData.put("stringExample", "Hello world!");
         docData.put("booleanExample", true);
@@ -134,6 +134,52 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+//        TODO: pushing data using custom java object
+        Team t1 = new Team("a",10,1);
+
+        db.collection("teams").add(t1).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.d("Upload","Success");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Upload","Error");
+            }
+        });
+
+//        TODO: push timestamp
+        Map<String,Object> timeSample = new HashMap<>();
+        timeSample.put("timestamp", FieldValue.serverTimestamp());
+
+        db.collection("timestamp").add(timeSample).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.d("Timestamp","Success");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Timestamp","Error");
+
+            }
+        });
+
+
+
+////        TODO: using the update function
+//        db.collection("students").document("TByV8HnUATKBSiLtv9tS").update("position",2).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Log.d("Update","Success");
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d("Update","Error");
+//            }
+//        });
 
     }
 }
