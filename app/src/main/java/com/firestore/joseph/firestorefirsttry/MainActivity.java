@@ -11,6 +11,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,6 +102,38 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Merge","Error");
             }
         });
+
+//        TODO: Different data types supported in firestore
+
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("stringExample", "Hello world!");
+        docData.put("booleanExample", true);
+        docData.put("numberExample", 3.14159265);
+        docData.put("dateExample", new Date());
+        docData.put("listExample", Arrays.asList(1, 2, 3));
+        docData.put("nullExample", null);
+
+        Map<String, Object> nestedData = new HashMap<>();
+        nestedData.put("a", 5);
+        nestedData.put("b", true);
+
+        docData.put("objectExample", nestedData);
+
+
+        db.collection("students").document("types").set(docData,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("Upload","Success");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Upload","Error");
+
+            }
+        });
+
+
 
     }
 }
