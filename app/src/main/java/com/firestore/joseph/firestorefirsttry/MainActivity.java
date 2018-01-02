@@ -5,9 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -135,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        TODO: pushing data using custom java object
-        Team t1 = new Team("a",10,1);
+        final Team t1 = new Team("a",10,1);
 
         db.collection("teams").add(t1).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -168,18 +171,46 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//        TODO: using the update function
-        db.collection("students").document("newStudent").update("age",60).addOnSuccessListener(new OnSuccessListener<Void>() {
+////        TODO: using the update function
+//        db.collection("students").document("newStudent").update("age",60).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Log.d("Update","Success");
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d("Update","Error");
+//            }
+//        });
+
+
+
+
+
+//        TODO: From here adding code samples for fetching data from firestore
+        //First we make a document reference and then use the get() function
+
+        final DocumentReference documentReference = db.collection("students").document("newStudent");
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("Update","Success");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("Update","Error");
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                if (task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot != null){
+                        Log.d("Data",task.getResult().getData().toString());
+                    }else {
+                        Log.d("Data","No such document!!");
+                    }
+                }else{
+                    Log.d("get error",task.getException().toString());
+                }
+
+
             }
         });
+
 
     }
 }
