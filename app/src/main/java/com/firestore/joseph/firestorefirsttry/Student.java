@@ -6,16 +6,16 @@ package com.firestore.joseph.firestorefirsttry;
 
 public class Student {
     int age;
-    String capital;
+    Boolean capital;
     String firstName;
     String lastName;
-    int ph;
+    String ph;
 
 
     public Student() {
     }
 
-    public Student(int age, String capital, String firstName, String lastName, int ph) {
+    public Student(int age, Boolean capital, String firstName, String lastName, String ph) {
         this.age = age;
         this.capital = capital;
         this.firstName = firstName;
@@ -32,11 +32,11 @@ public class Student {
         this.age = age;
     }
 
-    public String getCapital() {
+    public Boolean getCapital() {
         return capital;
     }
 
-    public void setCapital(String capital) {
+    public void setCapital(Boolean capital) {
         this.capital = capital;
     }
 
@@ -56,11 +56,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public int getPh() {
+    public String  getPh() {
         return ph;
     }
 
-    public void setPh(int ph) {
+    public void setPh(String  ph) {
         this.ph = ph;
     }
 }
