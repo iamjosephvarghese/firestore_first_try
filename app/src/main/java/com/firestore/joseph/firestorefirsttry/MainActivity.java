@@ -212,5 +212,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+//        TODO: fetching data using custom object of class Student.java
+        DocumentReference documentReference1 = db.collection("students").document("newStudent");
+        documentReference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                Student student_fetch = documentSnapshot.toObject(Student.class);
+                Log.d("firstName",student_fetch.getFirstName());
+                Log.d("lastName",student_fetch.getLastName());
+
+            }
+        });
+
+
     }
 }
